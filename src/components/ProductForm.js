@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { addProduct, getCategories } from "../services/api";
-import CustomButton from "./Button";
+import { getCategories } from "../services/api";
 
-const ProductForm = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+const ProductForm = ({ initialData = {}, onSubmit }) => {
+  const [name, setName] = useState(initialData.name || "");
+  const [price, setPrice] = useState(initialData.price || "");
+  const [category, setCategory] = useState(initialData.category || "");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    getCategories().then((data) => setCategories(data));
+    getCategories().then(setCategories);
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addProduct({ name, price, category }).then(() => {
-      setName("");
-      setPrice("");
-      setCategory("");
-      alert("Produit ajouté !");
-    });
+    onSubmit({ name, price, category });
   };
 
   return (
@@ -36,18 +30,15 @@ const ProductForm = () => {
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      >
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="">Sélectionnez une catégorie</option>
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.name}>
-            {cat.name}
+        {categories.map((cat, index) => (
+          <option key={index} value={cat}>
+            {cat}
           </option>
         ))}
       </select>
-      <CustomButton type="submit">Ajouter Produit</CustomButton>
+      <button type="submit">Valider</button>
     </form>
   );
 };

@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getProducts, deleteProduct } from "../services/api";
+import React from "react";
 import CustomButton from "./Button";
 
-const ProductTable = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProducts().then((data) => setProducts(data));
-  }, []);
-
-  const handleDelete = (id) => {
-    deleteProduct(id).then(() => {
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-    });
-  };
-
+const ProductTable = ({ products, onEdit, onDelete }) => {
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           <th>ID</th>
@@ -34,12 +21,14 @@ const ProductTable = () => {
             <td>{product.price}</td>
             <td>{product.category}</td>
             <td>
-              <CustomButton
-                color="error"
-                onClick={() => handleDelete(product.id)}
-              >
-                Supprimer
-              </CustomButton>
+              <div className="action-buttons">
+                <CustomButton color="warning" onClick={() => onEdit(product)}>
+                  Modifier
+                </CustomButton>
+                <CustomButton color="error" onClick={() => onDelete(product.id)}>
+                  Supprimer
+                </CustomButton>
+              </div>
             </td>
           </tr>
         ))}

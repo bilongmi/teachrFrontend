@@ -1,14 +1,21 @@
-import React from "react";
-import ProductTable from "./components/ProductTable";
-import ProductForm from "./components/ProductForm";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AddProductPage from "./pages/AddProductPage";
+import EditProductPage from "./pages/EditProductPage";
+import './App.css'; // Import des styles CSS
 
 const App = () => {
+  const [selectedProduct, setSelectedProduct] = useState(null); // Produit à modifier
+
   return (
-    <div>
-      <h1>Gestion des Produits</h1>
-      <ProductForm />
-      <ProductTable />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage onEdit={setSelectedProduct} />} />
+        <Route path="/add" element={<AddProductPage />} />
+        <Route path="/edit" element={<EditProductPage product={selectedProduct} />} />
+      </Routes>
+    </Router>
   );
 };
 
