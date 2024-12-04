@@ -37,7 +37,22 @@ const HomePage = ({ onEdit }) => {
   return (
     <div className="center-container">
       <h1>Gérez vos Produits</h1>
-      <SearchBar categories={categories} onSearch={handleSearch} />
+      <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        <SearchBar categories={categories} onSearch={handleSearch} />
+        <button
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            borderRadius: "5px",
+          }}
+          onClick={() => navigate("/categories")}
+        >
+          Catégories
+        </button>
+      </div>
       <ProductTable
         products={products}
         onEdit={(product) => {
@@ -48,9 +63,6 @@ const HomePage = ({ onEdit }) => {
       />
       <div>
         <button onClick={() => navigate("/add")}>Ajouter un produit</button>
-        <button onClick={() => alert("Page Catégories non encore implémentée")}>
-          Catégories
-        </button>
       </div>
     </div>
   );

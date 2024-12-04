@@ -13,12 +13,25 @@ export const addProduct = (product) => {
   api.products.push({ id: api.products.length + 1, ...product });
   return Promise.resolve();
 };
+export const addCategory = (category) => {
+  api.categories.push({ id: api.categories.length + 1, ...category });
+  return Promise.resolve();
+};
 export const updateProduct = (id, updatedProduct) => {
   const index = api.products.findIndex((p) => p.id === id);
   if (index !== -1) api.products[index] = { ...api.products[index], ...updatedProduct };
   return Promise.resolve();
 };
+export const updateCategory = (id, updatedCategory) => {
+  const index = api.categories.findIndex((c) => c.id === id);
+  if (index !== -1) api.categories[index] = { ...api.categories[index], ...updatedCategory };
+  return Promise.resolve();
+}
 export const deleteProduct = (id) => {
   api.products = api.products.filter((p) => p.id !== id);
+  return Promise.resolve();
+};
+export const deleteCategory = (id) => {
+  api.categories = api.categories.filter((c) => c.id !== id);
   return Promise.resolve();
 };
