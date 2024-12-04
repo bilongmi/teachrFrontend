@@ -35,3 +35,17 @@ export const deleteCategory = (id) => {
   api.categories = api.categories.filter((c) => c.id !== id);
   return Promise.resolve();
 };
+
+// import axios from 'axios';
+
+// const API_BASE_URL = 'http://localhost:8000/api'; // URL de votre backend
+
+// export const getProducts = async () => {
+//   try {
+//     const response = await axios.get(`${API_BASE_URL}/produits`);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Erreur lors de la récupération des produits:', error);
+//     throw error;
+//   }
+// };

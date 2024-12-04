@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import CustomButton from "./Button";
 
 const ProductTable = ({ products, onEdit, onDelete }) => {
@@ -17,9 +17,9 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
         {products.map((product) => (
           <tr key={product.id}>
             <td>{product.id}</td>
-            <td>{product.name}</td>
-            <td>{product.price}</td>
-            <td>{product.category}</td>
+            <td>{product.nom}</td>
+            <td>{product.prix} €</td>
+            <td>{product.categorie.nom}</td>
             <td>
               <div className="action-buttons">
                 <CustomButton color="warning" onClick={() => onEdit(product)}>

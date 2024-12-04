@@ -3,21 +3,32 @@ import { useNavigate } from "react-router-dom";
 import ProductTable from "../components/ProductTable";
 import SearchBar from "../components/SearchBar";
 import { getProducts, deleteProduct, getCategories } from "../services/api";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../features/productSlice';
 
 const HomePage = ({ onEdit }) => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
+
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.list); 
+  const status = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error); 
+
   useEffect(() => {
-    getProducts().then(setProducts);
-    getCategories().then(setCategories);
-  }, []);
+    if (status === 'idle') {
+      dispatch(fetchProducts()); 
+      console.log(products);
+    }
+  }, [dispatch, status]);
+
+  
 
   const handleDelete = (id) => {
-    deleteProduct(id).then(() => {
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-    });
+    // deleteProduct(id).then(() => {
+    //   setProducts((prev) => prev.filter((p) => p.id !== id));
+    // });
   };
 
   const handleSearch = (filters) => {
@@ -30,7 +41,7 @@ const HomePage = ({ onEdit }) => {
           : true;
         return byName && byPrice && byCategory;
       });
-      setProducts(filtered);
+      // setProducts(filtered);
     });
   };
 
