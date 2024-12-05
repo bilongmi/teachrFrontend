@@ -10,6 +10,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
           <th>Nom</th>
           <th>Prix</th>
           <th>Catégorie</th>
+          <th>Description</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -20,6 +21,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             <td>{product.nom}</td>
             <td>{product.prix} €</td>
             <td>{product.categorie.nom}</td>
+            <td>{product.description}</td>
             <td>
               <div className="action-buttons">
                 <CustomButton color="warning" onClick={() => onEdit(product)}>

@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { updateCategory } from "../services/api";
+import { useDispatch } from "react-redux";
+import { modifyCategory } from "../features/categorySlice";
+
 
 const EditCategoryPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { category } = state;
+  const dispatch = useDispatch();
 
   const [name, setName] = useState(category.name);
 
   const handleEditCategory = () => {
     if (name.trim()) {
-      updateCategory(category.id, { name }).then(() => {
+      dispatch(modifyCategory({ id:category.id,  name } )).then(() => {
         alert("Catégorie modifiée !");
         navigate("/categories");
       });

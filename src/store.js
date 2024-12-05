@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-// Exemple de slice à importer
 import productReducer from './features/productSlice';
+import categoryReducer from './features/categorySlice'
 
 const store = configureStore({
   reducer: {
     products: productReducer, 
+    categories: categoryReducer,
   },
 });
 
