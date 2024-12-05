@@ -13,7 +13,8 @@
   margin-top: 20px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
@@ -26,25 +27,59 @@
 .action-buttons {
   display: flex;
   justify-content: center;
-  gap: 10px; /* Ajoute un espace entre les boutons Modifier et Supprimer */
+  gap: 30px; /* Ajoute un espace entre les boutons Modifier et Supprimer */
 }
 
-.search-bar {
-  margin-bottom: 20px;
+.navbar {
   display: flex;
-  gap: 10px; /* Ajoute un espace entre les champs */
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.search-bar input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Augmente l'arrondi des bords */
+  width: 150px; /* Réduit la taille des champs */
+  
 }
 
 button {
   padding: 10px 20px;
-  margin-top: 10px;
   cursor: pointer;
   border: none;
-  background-color: #4caf50;
   color: white;
   border-radius: 5px;
 }
 
 button:hover {
-  background-color: #45a049;
+  opacity: 0.8;
+}
+
+.orange-button {
+  background-color: #ffa500; 
+}
+
+.blue-button {
+  background-color: #2196f3; 
+}
+
+.red-button {
+  background-color:#f01616 ; 
+}
+
+.add-product-container {
+  margin-top: 30px; 
+}
+.addcatg{
+ background-color:#ffa500 ;
+ margin-top: 30px;
+}
+
+.prod{
+  background-color:#2196f3;
+  margin-top: 30px;
 }

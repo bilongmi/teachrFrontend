@@ -29,12 +29,12 @@ const SearchBar = ({ onSearch, categories }) => {
       >
         <option value="">Toutes les catégories</option>
         {categories.map((cat, index) => (
-          <option key={index} value={cat}>
-            {cat}
+          <option key={index} value={cat.nom}>
+            {cat.nom}
           </option>
         ))}
       </select>
-      <button onClick={handleSearch}>Rechercher</button>
+      <button className="blue-button" onClick={handleSearch}>Rechercher</button>
     </div>
   );
 };

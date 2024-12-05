@@ -27,9 +27,7 @@ const CategoriesPage = () => {
   return (
     <div className="center-container">
       <h1>Gérez vos Catégories</h1>
-      <button onClick={() => navigate("/add-category")}>
-        Ajouter une catégorie
-      </button>
+      
       <table className="table">
         <thead>
           <tr>
@@ -82,7 +80,10 @@ const CategoriesPage = () => {
           ))}
         </tbody>
       </table>
-      <button onClick={() => navigate("/")}>Vos Produits</button>
+      <button onClick={() => navigate("/add-category")} className="addcatg">
+        Ajouter une catégorie
+      </button>
+      <button onClick={() => navigate("/")} className="prod">Vos Produits</button>
     </div>
   );
 };

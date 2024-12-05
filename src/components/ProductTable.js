@@ -24,10 +24,10 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             <td>{product.description}</td>
             <td>
               <div className="action-buttons">
-                <CustomButton color="warning" onClick={() => onEdit(product)}>
+                <CustomButton className="orange-button"  onClick={() => onEdit(product)}>
                   Modifier
                 </CustomButton>
-                <CustomButton color="error" onClick={() => onDelete(product.id)}>
+                <CustomButton color='error' onClick={() => onDelete(product.id)}>
                   Supprimer
                 </CustomButton>
               </div>
