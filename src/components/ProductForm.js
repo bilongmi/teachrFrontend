@@ -14,7 +14,7 @@ const ProductForm = ({ initialData = {}, onSubmit, categories }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form  onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Nom du produit"
@@ -36,7 +36,7 @@ const ProductForm = ({ initialData = {}, onSubmit, categories }) => {
           </option>
         ))}
       </select>
-      <button type="submit">Valider</button>
+      <button type="submit" className="orange-button" >Valider</button>
     </form>
   );
 };

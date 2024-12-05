@@ -31,9 +31,11 @@ export const addProduct = async (product) => {
   }
 };
 
-export const updateProduct = async (id, updatedProduct) => {
+export const updateProduct = async (id, product) => {
   try {
-    const response = await axios.put(`${SERVER_URL}/produits/${id}`, updatedProduct);
+    const response = await axios.put(`${SERVER_URL}/produits/${id}`, {nom:product.name, prix:product.price, description:product.description, categorie_id:product.category});
+    console.log(response.data);
+    
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la modification du produit:', error);
