@@ -1,13 +1,15 @@
 import React from "react";
 import ProductForm from "../components/ProductForm";
-import { updateProduct } from "../services/api";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { modifyProduct } from "../features/productSlice";
 
 const EditProductPage = ({ product }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleEdit = (updatedProduct) => {
-    updateProduct(product.id, updatedProduct).then(() => {
+   dispatch(modifyProduct ( updatedProduct)) .then(() => {
       alert("Produit modifié !");
       navigate("/");
     });

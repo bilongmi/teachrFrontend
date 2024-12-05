@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProducts } from '../services/porduitsServices';
+import { getProducts, deleteProduct as deleteProductAPI, addProduct, updateProduct } from '../services/porduitsServices';
+
 
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
@@ -13,6 +14,52 @@ export const fetchProducts = createAsyncThunk(
     }
   );
 
+ 
+
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (id, { rejectWithValue }) => {
+    try {
+      await deleteProductAPI(id); 
+      return id; 
+    } catch (error) {
+      return rejectWithValue(error.message); 
+    }
+  }
+);
+
+export const createProduct = createAsyncThunk(
+    'products/createProduct',
+    async (product, { rejectWithValue }) => {
+      try {
+        const data = await addProduct(product);
+        console.log(data)
+        return data; 
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+  export const setProducts = createAsyncThunk(
+    'products/setProducts',
+    async (products, { rejectWithValue }) => {
+
+        return products ; 
+    }
+
+  );
+
+  export const modifyProduct = createAsyncThunk(
+    'products/modifyProduct',
+    async ({ id, updatedProduct }, { rejectWithValue }) => {
+      try {
+        const data = await updateProduct(id, updatedProduct);
+        return { id, ...data }; 
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
 
 const productSlice = createSlice({
   name: 'products',
@@ -43,9 +90,34 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload; 
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.list = state.list.filter((product) => product.id !== action.payload); 
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload; 
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.list.push(action.payload); // Ajoute le produit à la liste
+      })
+      .addCase(setProducts.fulfilled, (state, action) =>{
+       state.list = action.payload
+      })
+      .addCase(modifyProduct.fulfilled, (state, action) => {
+        const index = state.list.findIndex((product) => product.id === action.payload.id);
+        if (index !== -1) {
+          state.list[index] = action.payload; // Met à jour le produit
+        }
       });
+  
   },
 });
 
-export const { setProducts, addProduct, removeProduct } = productSlice.actions;
+export const { removeProduct } = productSlice.actions;
 export default productSlice.reducer;

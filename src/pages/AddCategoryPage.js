@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCategories, addCategory } from "../services/api";
+import { getCategories, addCategory } from "../services/categoriesService";
+import { useDispatch } from "react-redux";
+import { createCategory } from "../features/categorySlice";
+
 
 const AddCategoryPage = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAddCategory = () => {
     if (name.trim()) {
-      addCategory({ name }).then(() => {
+    dispatch(createCategory( name ))  
+      .then(() => {
         alert("Catégorie ajoutée !");
         navigate("/categories");
       });

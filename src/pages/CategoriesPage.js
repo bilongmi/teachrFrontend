@@ -1,28 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCategories, deleteCategory } from "../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchCategories, removeCategory,} from "../features/categorySlice";
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+
+  const categories = useSelector((state) => state.categories.list);
+  const status = useSelector((state) => state.categories.status);
+  const error = useSelector((state) => state.categories.error);
 
   useEffect(() => {
-    // Récupérer les catégories depuis l'API
-    getCategories().then((data) => {
-      setCategories(data); // Vérifiez que data est un tableau d'objets { id, name }
-    });
-  }, []);
+    if (status === "idle") {
+      dispatch(fetchCategories()); 
+    }
+  }, [dispatch, status]);
 
   const handleDelete = (id) => {
-    deleteCategory(id).then(() => {
-      setCategories((prev) => prev.filter((c) => c.id !== id));
-    });
+    dispatch(removeCategory(id)); 
   };
+
+  if (status === "loading") return <p>Chargement...</p>;
+  if (status === "failed") return <p>Erreur : {error}</p>;
 
   return (
     <div className="center-container">
       <h1>Gérez vos Catégories</h1>
-      <button onClick={() => navigate("/add-category")}>Ajouter une catégorie</button>
+      <button onClick={() => navigate("/add-category")}>
+        Ajouter une catégorie
+      </button>
       <table className="table">
         <thead>
           <tr>
@@ -35,7 +42,7 @@ const CategoriesPage = () => {
           {categories.map((category) => (
             <tr key={category.id}>
               <td>{category.id}</td>
-              <td>{category.name}</td> {/* Rendu de la propriété "name" */}
+              <td>{category.nom}</td> {/* Rendu de la propriété "name" */}
               <td>
                 <div className="action-buttons">
                   <button
@@ -48,7 +55,11 @@ const CategoriesPage = () => {
                       marginRight: "10px",
                       borderRadius: "5px",
                     }}
-                    onClick={() => navigate(`/edit-category/${category.id}`, { state: { category } })}
+                    onClick={() =>
+                      navigate(`/edit-category/${category.id}`, {
+                        state: { category },
+                      })
+                    }
                   >
                     Modifier
                   </button>
